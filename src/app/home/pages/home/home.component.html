@@ -1,0 +1,150 @@
+<!-- Error Message -->
+<div *ngIf="errorMessage" class="alert alert-danger custom-error">
+  <strong>Error:</strong> {{ errorMessage }}
+</div>
+
+<!-- Room List Section -->
+<div class="container room-list-container">
+  <div class="row">
+    <!-- Filter Button -->
+    <div class="col-12 text-end">
+      <button class="btn btn-primary filter-button" (click)="openFilterModal()">
+        <i class="bi bi-funnel me-2"></i>Filter Rooms
+      </button>
+    </div>
+  </div>
+
+  <!-- Room Cards -->
+  <div class="row mt-4">
+    <div class="col-md-4 mt-3" *ngFor="let room of filteredRooms">
+      <div
+        class="card room-card"
+        (click)="navigateToRoomDetail(room.roomNumber)"
+      >
+        <div class="card-body">
+          <h5 class="card-title">Ruang {{ room.roomNumber }}</h5>
+          <hr />
+          <p><strong>Kapasitas:</strong> {{ room.capacityType }}</p>
+          <p><strong>Status:</strong> {{ room.roomStatus }}</p>
+          <p>
+            <strong>Proyektor:</strong> {{ room.hasProjector ? "Yes" : "No" }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filter Modal -->
+<div
+  class="modal custom-modal"
+  tabindex="-1"
+  [ngClass]="{ show: showFilterModal }"
+  style="display: block"
+  *ngIf="showFilterModal"
+>
+  <div class="modal-dialog">
+    <div class="modal-content shadow-lg rounded">
+      <!-- Modal Header -->
+      <div class="modal-header bg-primary text-white rounded-top">
+        <h5 class="modal-title">Filter Rooms</h5>
+        <button
+          type="button"
+          class="btn-close text-white"
+          (click)="closeFilterModal()"
+        ></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Floor Filter -->
+        <div class="form-group mb-4">
+          <label for="floorFilter" class="form-label fw-bold">Floor</label>
+          <select
+            id="floorFilter"
+            class="form-select"
+            [(ngModel)]="selectedFloor"
+          >
+            <option value="">Select Floor</option>
+            <option *ngFor="let floor of filterFloor" [value]="floor">
+              {{ floor }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Capacity Filter -->
+        <div class="form-group mb-4">
+          <label for="capacityFilter" class="form-label fw-bold"
+            >Capacity</label
+          >
+          <select
+            id="capacityFilter"
+            class="form-select"
+            [(ngModel)]="selectedCapacity"
+          >
+            <option value="">Select Capacity</option>
+            <option *ngFor="let capacity of filterCapacity" [value]="capacity">
+              {{ capacity }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="form-group mb-4">
+          <label for="statusFilter" class="form-label fw-bold">Status</label>
+          <select
+            id="statusFilter"
+            class="form-select"
+            [(ngModel)]="selectedStatus"
+          >
+            <option value="">Select Status</option>
+            <option *ngFor="let status of filterStatus" [value]="status">
+              {{ status }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Projector Filter -->
+        <div class="form-group mb-4">
+          <label for="projectorFilter" class="form-label fw-bold"
+            >Has Projector</label
+          >
+          <select
+            id="projectorFilter"
+            class="form-select"
+            [(ngModel)]="selectedProjector"
+          >
+            <option value="">Select Projector</option>
+            <option
+              *ngFor="let projector of filterProjector"
+              [value]="projector"
+            >
+              {{ projector ? "Yes" : "No" }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer bg-light">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeFilterModal()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="applyFilters()">
+          Apply Filters
+        </button>
+        <button
+          type="button"
+          class="btn btn-link text-danger"
+          (click)="resetFilters()"
+        >
+          Reset Filters
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

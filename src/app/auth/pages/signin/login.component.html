@@ -1,0 +1,47 @@
+<div class="container-fluid bg-light min-vh-100 d-flex justify-content-center align-items-center">
+  <div class="row justify-content-center align-items-center w-100">
+    <div class="col-md-4 col-12">
+      <div class="card shadow-lg rounded-3 border-0">
+        <div class="card-body p-4">
+          <!-- <h5 class="card-title text-center">Login</h5> -->
+          <div class="text-center mb-4">
+            <img src="/img/logo.png" alt="Logo" class="logo-img mb-4" />
+          </div>
+
+          <form [formGroup]="loginForm" (submit)="onSubmit()">
+            <div class="form-group mb-3">
+              <label for="userId" class="form-label text-muted">User ID</label>
+              <input
+                id="userId"
+                type="text"
+                formControlName="userId"
+                class="form-control border-0 shadow-sm"
+                placeholder="Enter your user ID"
+              />
+              <app-message-validation
+                [field]="loginForm.get('userId')"
+                [label]="'userId'"
+              ></app-message-validation>
+            </div>
+            <div class="form-group mb-3">
+              <label for="password" class="form-label text-muted">Password</label>
+              <input
+                id="password"
+                type="password"
+                formControlName="password"
+                class="form-control border-0 shadow-sm"
+                placeholder="Enter your password"
+              />
+              <app-message-validation
+                [field]="loginForm.get('password')"
+                [label]="'password'"
+              ></app-message-validation>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

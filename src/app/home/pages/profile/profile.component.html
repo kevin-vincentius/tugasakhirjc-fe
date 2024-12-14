@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <h2 class="text-primary">User Profile</h2>
+  
+    <!-- User Data Section -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">User Information</h5>
+        <p><strong>Nama Lengkap:</strong> {{ user?.namaLengkap }}</p>
+        <p><strong>Role:</strong> {{ user?.aksesId?.aksesName }}</p>
+        <p><strong>Unit Kerja:</strong> {{ user?.unitKerja }}</p>
+        <p><strong>Email:</strong> {{ user?.email }}</p>
+        <p><strong>Nomor HP:</strong> {{ user?.nomorHP }}</p>
+      </div>
+    </div>
+  
+    <!-- Password Change Form -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Change Password</h5>
+        <form (ngSubmit)="changePassword()">
+          <div class="mb-3">    
+            <label for="oldPassword" class="form-label">Old Password</label>
+            <input type="password" id="oldPassword" class="form-control" [(ngModel)]="oldPassword" name="oldPassword" required />
+          </div>
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">New Password</label>
+            <input type="password" id="newPassword" class="form-control" [(ngModel)]="newPassword" name="newPassword" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Change Password</button>
+        </form>
+        <p *ngIf="errorMessage" class="text-danger mt-3">{{ errorMessage }}</p>
+        <p *ngIf="successMessage" class="text-success mt-3">{{ successMessage }}</p>
+      </div>
+    </div>
+  </div>
+  

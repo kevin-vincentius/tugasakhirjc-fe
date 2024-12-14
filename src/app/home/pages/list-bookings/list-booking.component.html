@@ -1,0 +1,97 @@
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">Booking List</h2>
+  
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  
+    <!-- Error Message -->
+    <p *ngIf="errorMessage && !isLoading" class="text-danger text-center">
+      {{ errorMessage }}
+    </p>
+  
+    <!-- Booking List -->
+    <div *ngIf="!isLoading && bookings.length > 0" class="row gy-4">
+      <div *ngFor="let booking of bookings" class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary">
+              {{ booking.room.roomNumber }} - {{ booking.bookingType || "N/A" }}
+            </h5>
+            <p class="mb-1">
+              <strong>Status:</strong>
+              <span
+                [ngClass]="{
+                  'text-success': +booking.bookingStatus === 0,
+                  'text-warning': +booking.bookingStatus === 1,
+                  'text-info': +booking.bookingStatus === 2,
+                  'text-danger': +booking.bookingStatus === 3
+                }"
+              >
+                {{
+                  +booking.bookingStatus === 0
+                    ? "Booked"
+                    : +booking.bookingStatus === 1
+                    ? "Ongoing"
+                    : +booking.bookingStatus === 2
+                    ? "Completed"
+                    : "Canceled"
+                }}
+              </span>
+            </p>
+            <p class="mb-1">
+              <strong>Jadwal:</strong>
+              {{ booking.startTime | date : "HH:mm" }} -
+              {{ booking.endTime | date : "HH:mm" }}
+            </p>
+            <p class="mb-1">
+              <strong>Nama:</strong> {{ booking.user?.namaLengkap || "N/A" }}
+            </p>
+            <p class="mb-1">
+              <strong>Unit Kerja:</strong> {{ booking.user?.unitKerja || "N/A" }}
+            </p>
+            <p class="mb-1">
+              <strong>Nomor Telp:</strong> {{ booking.user?.nomorHP || "N/A" }}
+            </p>
+          </div>
+          <div class="card-footer text-end">
+            <button
+              class="btn btn-primary"
+              (click)="generateCodeAndOpenModal(generateCodeModal, booking.bookingId)"
+            >
+              Generate Code
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Empty State -->
+    <p *ngIf="!isLoading && bookings.length === 0" class="text-muted text-center mt-4">
+      No bookings available.
+    </p>
+  </div>
+  
+  <!-- Generate Code Modal -->
+  <ng-template #generateCodeModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title text-primary">Generate Confirmation Code</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body text-center">
+      <div *ngIf="confirmationCode; else errorTemplate">
+        <p class="text-success">Your confirmation code is:</p>
+        <h4 class="text-primary">{{ confirmationCode }}</h4>
+      </div>
+      <ng-template #errorTemplate>
+        <p class="text-danger">{{ errorMessage }}</p>
+      </ng-template>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+    </div>
+  </ng-template>
+  

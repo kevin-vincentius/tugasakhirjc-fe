@@ -1,0 +1,156 @@
+/* General Styling */
+.container {
+  /* max-width: 900px; */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Room Details */
+.container h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #007bff; /* Primary color for the room number */
+  margin-bottom: 20px;
+}
+
+.container p {
+  font-size: 1rem;
+  margin: 5px 0;
+  color: #495057; /* Subtle gray for labels and values */
+}
+
+.container .form-label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #495057;
+}
+
+/* Schedule List */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.02); /* Slight zoom effect on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+}
+
+.card-body {
+  background-color: #fdfdfd; /* Off-white background */
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.text-muted {
+  font-size: 1rem;
+  font-style: italic;
+  color: #6c757d;
+  text-align: center;
+}
+.btn {
+  position: relative;
+  z-index: 10; /* Ensure it's above other elements */
+}
+
+.modal {
+  z-index: 1050; /* Standard z-index for modals */
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+}
+
+.btn-secondary:hover {
+  background-color: #565e64;
+}
+
+/* Booking Modal */
+.modal-content {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Depth effect for modal */
+}
+
+.modal-header {
+  background-color: #007bff; /* Accent color for modal header */
+  color: #fff; /* White text for contrast */
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-header .modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  background-color: #f8f9fa; /* Light gray background */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.modal-footer {
+  background-color: #f1f3f5; /* Slightly lighter footer for separation */
+  border-top: 1px solid #dee2e6;
+  padding: 15px 20px;
+}
+
+/* Form Inputs */
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 0.95rem;
+  padding: 10px 12px;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Booking Modal Form */
+textarea.form-control {
+  resize: none;
+}
+
+label.form-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #495057;
+}
+
+/* Date Filter */
+#filterDate {
+  max-width: 300px;
+  margin-bottom: 20px;
+}

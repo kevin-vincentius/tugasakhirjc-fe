@@ -1,0 +1,152 @@
+<div class="container mt-4">
+  <h2 class="text-primary mb-4">User Management</h2>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <p *ngIf="errorMessage" class="text-danger text-center">
+    {{ errorMessage }}
+  </p>
+
+  <!-- Success Message -->
+  <p *ngIf="successMessage" class="text-success text-center">
+    {{ successMessage }}
+  </p>
+
+  <!-- User Registration Form -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="card-title">Register New User</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="registerUser()">
+        <div class="mb-3">
+          <label for="userId" class="form-label">User ID</label>
+          <input
+            type="text"
+            id="userId"
+            class="form-control"
+            [(ngModel)]="newUser.userId"
+            name="userId"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="namaLengkap" class="form-label">Nama Lengkap</label>
+          <input
+            type="text"
+            id="namaLengkap"
+            class="form-control"
+            [(ngModel)]="newUser.namaLengkap"
+            name="namaLengkap"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="akses" class="form-label">Akses</label>
+          <select
+            id="akses"
+            class="form-control"
+            [(ngModel)]="newUser.aksesId"
+            name="aksesId"
+            required
+          >
+            <option *ngFor="let option of aksesOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            [(ngModel)]="newUser.password"
+            name="password"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            [(ngModel)]="newUser.email"
+            name="email"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="unitKerja" class="form-label">Unit Kerja</label>
+          <input
+            type="text"
+            id="unitKerja"
+            class="form-control"
+            [(ngModel)]="newUser.unitKerja"
+            name="unitKerja"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="nomorHP" class="form-label">Nomor HP</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="newUser.nomorHP"
+            name="nomorHP"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- User List in Table Format -->
+  <div *ngIf="!isLoading && users.length > 0">
+    <h5 class="mb-3">Users</h5>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Nama Lengkap</th>
+          <th>Akses</th>
+          <th>Email</th>
+          <th>Unit Kerja</th>
+          <th>Nomor HP</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.userId }}</td>
+          <td>{{ user.namaLengkap }}</td>
+          <td>{{ user.aksesId?.aksesName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.unitKerja }}</td>
+          <td>{{ user.nomorHP }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="deleteUser(user.userId)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty State if no users -->
+  <p *ngIf="!isLoading && users.length === 0" class="text-muted text-center">
+    No users found.
+  </p>
+</div>

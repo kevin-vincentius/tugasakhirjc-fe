@@ -1,0 +1,63 @@
+/* General styles for the container */
+
+.control-section {
+  margin: 20px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling the ejs-schedule element */
+.custom-calendar {
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+.e-schedule .e-header-cells {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Customize the event background */
+.e-schedule .e-appointment {
+  background-color: #28a745;
+  color: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for events */
+.e-schedule .e-appointment:hover {
+  background-color: #218838;
+  cursor: pointer;
+}
+
+/* Today’s date highlight */
+.e-schedule .e-day .e-today {
+  background-color: #ffc107 !important;
+  color: black;
+}
+
+/* Time scale and cell styling */
+.e-schedule .e-work-cells {
+  border: 1px solid #e0e0e0;
+}
+
+/* Focus state for calendar cells */
+.e-schedule .e-work-cells:focus {
+  outline: 2px solid #007bff;
+}
+
+/* Add padding and font size to the footer or other sections if necessary */
+.e-schedule .e-footer {
+  padding: 10px;
+  background-color: #f1f1f1;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+}
+

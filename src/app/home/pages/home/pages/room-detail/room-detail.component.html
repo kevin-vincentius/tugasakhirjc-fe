@@ -1,0 +1,170 @@
+<div *ngIf="room" class="container mt-4">
+  <div class="d-flex justify-content-between align-items-start">
+    <!-- Room Details -->
+    <div>
+      <h2 class="text-primary mb-0">Ruang {{ room.roomNumber }}</h2>
+      <div class="mt-2">
+        <p><strong>Lantai:</strong> {{ room.floorNumber }}</p>
+        <p><strong>Kapasitas:</strong> {{ room.capacityType }}</p>
+        <p><strong>Status:</strong> {{ room.roomStatus }}</p>
+        <p>
+          <strong>Proyektor:</strong> {{ room.hasProjector ? "Yes" : "No" }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Filter and Book Room Buttons -->
+    <div class="d-flex flex-column align-items-end">
+      <!-- Filter Schedules -->
+      <div class="mb-2">
+        <label for="filterDate" class="form-label"
+          >Filter Schedules Berdasarkan Tanggal</label
+        >
+        <input
+          type="date"
+          id="filterDate"
+          class="form-control"
+          [(ngModel)]="selectedDate"
+          (change)="filterSchedules()"
+          name="filterDate"
+        />
+      </div>
+      <!-- Book Room Button -->
+      <button class="btn btn-primary" (click)="openBookingModal()">
+        Book Room
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule List -->
+<div class="mt-4">
+  <p *ngIf="!filteredSchedules.length" class="text-muted">Tidak ada jadwal.</p>
+  <div *ngIf="filteredSchedules.length">
+    <div class="row">
+      <!-- Start a new row for cards -->
+      <div class="col-md-4" *ngFor="let schedule of filteredSchedules">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">
+              {{ schedule.startTime | date : "HH:mm" }} -
+              {{ schedule.endTime | date : "HH:mm" }}
+            </h5>
+            <p
+              *ngIf="schedule.bookingsExtensions"
+              class="text-success d-flex align-items-center"
+            >
+              <strong class="me-2">Diperpanjang:</strong>
+              <span class="badge bg-success me-2">Ya</span>
+              <span class="ms-1">
+                <i class="bi bi-clock"></i>
+                sampai
+                {{ schedule.bookingsExtensions.newEndTime | date : "HH:mm" }}
+              </span>
+            </p>
+            <p>
+              <strong>Dibooking oleh:</strong>
+              {{ schedule.user?.namaLengkap }} - {{ schedule.user?.unitKerja }}
+            </p>
+            <p><strong>Jenis:</strong> {{ schedule.bookingType }}</p>
+            <p>
+              <strong>Deskripsi:</strong>
+              {{ schedule.description || "No description provided" }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End row -->
+  </div>
+</div>
+
+<!-- Booking Modal -->
+<div
+  class="modal fade"
+  tabindex="-1"
+  [ngClass]="{ show: showBookingModal }"
+  style="display: block"
+  *ngIf="showBookingModal"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Book Room</h5>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeBookingModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group mb-3">
+            <label for="bookingDate" class="form-label">Booking Date</label>
+            <input
+              type="date"
+              id="bookingDate"
+              class="form-control"
+              [(ngModel)]="bookingDate"
+              name="bookingDate"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="startTime" class="form-label">Start Time</label>
+            <input
+              type="time"
+              id="startTime"
+              class="form-control"
+              [(ngModel)]="startTime"
+              name="startTime"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="endTime" class="form-label">End Time</label>
+            <input
+              type="time"
+              id="endTime"
+              class="form-control"
+              [(ngModel)]="endTime"
+              name="endTime"
+            />
+          </div>
+          <div class="form-group mb-3">
+            <label for="capacityType" class="form-label">Booking Type</label>
+            <select
+              id="capacityType"
+              class="form-control"
+              [(ngModel)]="bookingType"
+              name="bookingType"
+            >
+              <option value="Meeting">Meeting</option>
+              <option value="Training">Training</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              id="description"
+              class="form-control"
+              [(ngModel)]="description"
+              rows="3"
+              name="description"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeBookingModal()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="bookRoom()">
+          Confirm Booking
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

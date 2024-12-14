@@ -1,0 +1,198 @@
+<div class="booking-list row mt-3 justify-content-start">
+  <!-- Header with Filter -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-primary">My Bookings</h2>
+
+    <!-- Filter Dropdown -->
+    <div class="dropdown">
+      <button
+        class="btn btn-secondary dropdown-toggle"
+        type="button"
+        id="filterDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Filter Status
+      </button>
+      <ul
+        class="dropdown-menu filter-dropdown p-3"
+        aria-labelledby="filterDropdown"
+      >
+        <li *ngFor="let status of statusOptions">
+          <div class="form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              [id]="'status-' + status.value"
+              [value]="status.value"
+              [(ngModel)]="status.checked"
+              (change)="applyFiltersAndSorting()"
+            />
+            <label class="form-check-label" [for]="'status-' + status.value">
+              {{ status.label }}
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div
+    *ngFor="let booking of filteredBookings"
+    [ngClass]="{
+      'no-buttons': +booking.bookingStatus === 2
+    }"
+    class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex booking-item card"
+  >
+    <div class="card-body">
+      <div class="booking-header">
+        <h3 class="room-name">
+          <span class="room-number">{{ booking.room.roomNumber }}</span>
+          <hr />
+          <span
+            *ngIf="+booking.bookingStatus !== 2 && +booking.bookingStatus !== 3"
+            class="status"
+            [ngClass]="{
+              'status-booked': +booking.bookingStatus === 0,
+              'status-ongoing': +booking.bookingStatus === 1,
+            }"
+          >
+            {{ getStatusText(+booking.bookingStatus) }}
+          </span>
+        </h3>
+        <p class="booking-date">
+          <strong>Tanggal:</strong>
+          {{ booking.bookingDate | date : "shortDate" }}
+        </p>
+        <p class="booking-time">
+          <strong>Jadwal:</strong>
+          {{ booking.startTime | date : "shortTime" }} -
+          {{ booking.endTime | date : "shortTime" }}
+        </p>
+        <p *ngIf="booking.bookingsExtensions" class="text-success fw-bold">
+          <i class="bi bi-clock"></i> Diperpanjang sampai
+          {{ booking.bookingsExtensions.newEndTime | date: 'HH:mm'}}
+        </p>
+      </div>
+
+      <div class="booking-actions">
+        <!-- Buttons for other statuses -->
+        <button
+          *ngIf="+booking.bookingStatus === 0"
+          class="btn btn-primary start-button"
+          (click)="openConfirmationModal(booking.bookingId, confirmationModal)"
+        >
+          Mulai Booking
+        </button>
+
+        <button
+          *ngIf="+booking.bookingStatus === 0"
+          class="btn btn-danger cancel-button"
+          (click)="openCancelModal(booking.bookingId, cancelModal)"
+        >
+          Batalkan Booking
+        </button>
+
+        <button
+          *ngIf="
+            +booking.bookingStatus === 1 && booking.bookingsExtensions === null
+          "
+          class="btn btn-warning extend-button"
+          (click)="openExtendModal(booking.bookingId, extendModal)"
+        >
+          Extend Booking
+        </button>
+
+        <button
+          *ngIf="+booking.bookingStatus === 1"
+          class="btn btn-success complete-button"
+          (click)="openCompleteModal(booking.bookingId, completeModal)"
+        >
+          Complete Booking
+        </button>
+      </div>
+
+      <!-- Add a badge if booking is completed -->
+      <div *ngIf="+booking.bookingStatus === 2" class="completed-badge">
+        Booking Selesai
+      </div>
+
+      <div *ngIf="+booking.bookingStatus === 3" class="canceled-badge">
+        Booking Dibatalkan
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noBookings>
+  <div class="no-bookings-message text-center">
+    <p>
+      Belum ada booking.
+      <a href="/home" class="btn btn-success">Booking ruangan sekarang.</a>
+    </p>
+  </div>
+</ng-template>
+
+<!-- Confirmation Modal Template -->
+<ng-template #confirmationModal>
+  <div class="modal-body">
+    <h4>Confirm Booking</h4>
+    <input
+      [(ngModel)]="confirmationCode"
+      class="form-control mb-2"
+      placeholder="Enter Confirmation Code"
+      aria-label="Confirmation Code"
+    />
+    <button class="btn btn-primary" (click)="confirmBooking()">Confirm</button>
+    <button class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+  </div>
+</ng-template>
+
+<!-- Extend Booking Modal Template -->
+<ng-template #extendModal>
+  <div class="modal-body">
+    <h4>Extend Booking</h4>
+    <input
+      [(ngModel)]="extensionDate"
+      type="datetime-local"
+      class="form-control mb-2"
+      placeholder="Enter New End Date"
+      aria-label="New End Date"
+    />
+    <input
+      [(ngModel)]="extendReason"
+      class="form-control mb-2"
+      placeholder="Enter Reason"
+      aria-label="Extension Reason"
+    />
+    <button class="btn btn-warning" (click)="extendBooking()">Submit</button>
+    <button class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+  </div>
+</ng-template>
+
+<!-- Cancel Booking Modal Template -->
+<ng-template #cancelModal>
+  <div class="modal-body">
+    <h4>Batalkan Booking</h4>
+    <p>Are you sure you want to cancel this booking?</p>
+    <button class="btn btn-danger" (click)="cancelBooking()">
+      Yes, Cancel
+    </button>
+    <button class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #completeModal>
+  <div class="modal-body">
+    <h4>Selesaikan Booking</h4>
+    <p>Please enter the confirmation code to complete this booking.</p>
+    <input
+      [(ngModel)]="confirmationCode"
+      class="form-control mb-3"
+      placeholder="Enter Confirmation Code"
+      aria-label="Confirmation Code"
+    />
+    <button class="btn btn-success" (click)="confirmBooking()">Complete</button>
+    <button class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+  </div>
+</ng-template>

@@ -1,0 +1,141 @@
+/* Error Message */
+@import "../../../../../node_modules/angular-calendar/css/angular-calendar.css";
+
+.custom-error {
+  font-size: 0.95rem;
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+}
+
+/* Room List Container */
+.room-list-container {
+  margin-top: 20px;
+}
+
+/* Filter Button */
+.filter-button {
+  font-size: 0.95rem;
+  padding: 10px 15px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.filter-button:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+/* Room Cards */
+.room-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.room-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.room-card .card-body {
+  background-color: #fdfdfd;
+  padding: 20px;
+}
+
+.room-card .card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #007bff;
+}
+
+/* Modal */
+.custom-modal .modal-dialog {
+  max-width: 500px;
+  margin: 1.75rem auto;
+}
+
+.custom-modal .modal-content {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.custom-modal .modal-header {
+  background-color: #007bff;
+  color: #fff;
+  border-bottom: 2px solid #0056b3;
+  padding: 1rem;
+}
+
+.custom-modal .modal-footer {
+  border-top: 1px solid #ddd;
+}
+
+.custom-modal .modal-body {
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+}
+
+.custom-modal .form-group label {
+  font-weight: 600;
+  color: #495057;
+}
+
+.custom-modal .form-select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+.custom-modal .modal-footer {
+  padding: 1rem;
+  background-color: #f1f1f1;
+  border-top: 1px solid #dee2e6;
+}
+
+.btn-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+/* Reset Button */
+.reset-button {
+  color: #007bff;
+  font-size: 0.9rem;
+}
+
+.reset-button:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.reset-button {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+/* Form Inputs */
+.form-control {
+  border-radius: 6px;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
